@@ -1,0 +1,47 @@
+{
+  "name": "video-upload",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "./src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/video-upload",
+        "tsConfig": "tsconfig.app.json",
+        "main": "src/main.tsx",
+        "assets": []
+      }
+    },
+
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "options": {
+        "buildTarget": "video-upload:build",
+        "port": 4200
+      }
+    },
+
+    "type-check": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "watch": true,
+        "project": "tsconfig.app.json"
+      }
+    },
+
+    "serve-with-checks": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run video-upload:type-check",
+          "nx run video-upload:serve"
+        ],
+        "parallel": true,
+        "color": true
+      }
+    }
+  }
+}
